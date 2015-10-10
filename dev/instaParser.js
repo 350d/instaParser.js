@@ -1,9 +1,11 @@
 /*!
- * tweetParser.js v2.1.2
- * Small Javascript Library that parse an element containing a tweet and turn URLS, @user & #hashtags into working urls
+ * instaParser.js v0.1.0
+ * Small Javascript Library that parse an element containing a instagram photo description and turn URLS, @user & #hashtags into working urls
  * License : MIT
  * author Vincent Loy <vincent.loy1@gmail.com>
  * http://vincent-loy.fr
+ * contributor Vladimir Sobolev <v.sobolev@gmail.com>
+ * http://sobolev.us
  */
 
 /*global window, document*/
@@ -13,7 +15,7 @@
     'use strict';
 
     // Class
-    var tweetParser,
+    var instaParser,
 
     // functions
         extend,
@@ -46,14 +48,13 @@
         return link;
     };
 
-    tweetParser = function (element, args) {
+    instaParser = function (element, args) {
         var elt = document.querySelectorAll(element),
             parameters = extend({
-                urlClass: 'tweet_link',
-                userClass: 'tweet_user',
+                urlClass: 'link',
+                userClass: 'user',
                 hashtagClass: 'hashtag',
                 target: '_blank',
-                searchWithHashtags: true,
                 parseUsers: true,
                 parseHashtags: true,
                 parseUrls: true
@@ -61,8 +62,8 @@
 
         Array.prototype.forEach.call(elt, function (el) {
 
-            var tweet = el.innerHTML,
-                searchlink, //search link for hashtags
+            var insta = el.innerHTML,
+                searchlink = "https://instagram.com/explore/tags/", //search link for hashtags
 
 
             //regex
@@ -70,38 +71,29 @@
                 regexUser = /\B@([a-zA-Z0-9_]+)/g, //regex for @users
                 regexHashtag = /\B(#[á-úÁ-Úä-üÄ-Üa-zA-Z0-9_]+)/g; //regex for #hashtags
 
-            //Hashtag Search link
-            if (parameters.searchWithHashtags) {
-                //this is the search with hashtag
-                searchlink = "https://twitter.com/hashtag/";
-            } else {
-                //this is a more global search including hashtags and the word itself
-                searchlink = "https://twitter.com/search?q=";
-            }
-
-            //turn URLS in the tweet into... working urls
+            //turn URLS in the instagram photo description into... working urls
             if (parameters.parseUrls) {
-                tweet = tweet.replace(regexUrl, function (url) {
+                insta = insta.replace(regexUrl, function (url) {
                     var link = generateLink(url, parameters.urlClass, url);
 
                     return url.replace(url, link.outerHTML);
                 });
             }
 
-            //turn @users in the tweet into... working urls
+            //turn @users in the instagram description into... working urls
             if (parameters.parseUsers) {
-                tweet = tweet.replace(regexUser, function (user) {
+                insta = insta.replace(regexUser, function (user) {
                     var userOnly = user.slice(1),
-                        url = 'http://twitter.com/' + userOnly,
+                        url = 'https://instagram.com/' + userOnly,
                         link = generateLink(url, parameters.userClass, user);
 
                     return user.replace(user, link.outerHTML);
                 });
             }
 
-            //turn #hashtags in the tweet into... working urls
+            //turn #hashtags in the instagram photo description into... working urls
             if (parameters.parseHashtags) {
-                tweet = tweet.replace(regexHashtag, function (hashtag) {
+                insta = insta.replace(regexHashtag, function (hashtag) {
                     var hashtagOnly = hashtag.slice(1),
                         url = searchlink + hashtagOnly,
                         link = generateLink(url, parameters.hashtagClass, hashtag);
@@ -110,25 +102,25 @@
                 });
             }
 
-            //then, it inject the last var into the element containing the tweet
-            el.innerHTML = tweet;
+            //then, it inject the last var into the element containing the instagram photo description
+            el.innerHTML = insta;
         });
     };
 
-    exports.tweetParser = tweetParser;
+    exports.instaParser = instaParser;
 }(window));
 
-/*global $, jQuery, tweetParser*/
+/*global $, jQuery, instaParser*/
 if (window.jQuery) {
-    (function ($, tweetParser) {
+    (function ($, instaParser) {
         'use strict';
 
-        function tweetParserify(el, options) {
-            tweetParser(el, options);
+        function instaParserify(el, options) {
+            instaParser(el, options);
         }
 
-        $.fn.tweetParser = function (options) {
-            return tweetParserify(this.selector, options);
+        $.fn.instaParser = function (options) {
+            return instaParserify(this.selector, options);
         };
-    }(jQuery, tweetParser));
+    }(jQuery, instaParser));
 }

@@ -1,8 +1,9 @@
 /**
- * Project : tweetParser.js
+ * Project : instaParser.js
  * File : gulpfile
  * Date : 06/20/2015
  * Author : Vincent Loy <vincent.loy1@gmail.com>
+ * Instagram version author : Vladimir Sobolev <v.sobolev@gmail.com>
  */
 
 /*jslint indent: 4, maxlen: 100, node: true, vars: true, nomen: true */
@@ -38,7 +39,7 @@
     });
 
     gulp.task('compress', function () {
-        return gulp.src(devJSDir + '/tweetParser.js')
+        return gulp.src(devJSDir + '/instaParser.js')
             .pipe(sourcemaps.init())
             .pipe(uglify({
                 preserveComments: 'some'
@@ -58,6 +59,6 @@
     // What tasks does running gulp trigger?
     gulp.task('default', ['css', 'watch']);
 
-    //To uglify the new version of tweetparser run : gulp release or gulp compress
+    //To uglify the new version of instaparser run : gulp release or gulp compress
     gulp.task('release', ['compress']);
 }());

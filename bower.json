@@ -1,20 +1,21 @@
 {
-  "name": "tweetparser.js",
+  "name": "instaparser.js",
   "version": "2.1.2",
-  "homepage": "https://github.com/VincentLoy/tweetParser.js",
+  "homepage": "https://github.com/350d/instaParser.js",
   "authors": [
-    "VincentLoy <vincent.loy1@gmail.com>"
+    "VincentLoy <vincent.loy1@gmail.com>",
+	"Vladimir Sobolev <v.sobolev@gmail.com>"
   ],
-  "description": "Small Javascript Library that parse Twitter Usernames, Hashtags and URLs",
+  "description": "Small Javascript Library that parse Instagram Usernames, Hashtags and URLs",
   "main": [
-    "dist/tweetParser.min.js",
-    "dev/tweetParser.js"
+    "dist/instaParser.min.js",
+    "dev/instaParser.js"
   ],
   "keywords": [
     "jquery",
     "plugin",
-    "twitter",
-    "tweet",
+    "instagram",
+    "insta",
     "parser",
     "parse",
     "username",
